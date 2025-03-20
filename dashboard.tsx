@@ -1,36 +1,33 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Bell, Menu, Search, User, X } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AnalyticsOverview } from "./components/analytics-overview"
-import { EngagementChart } from "./components/engagement-chart"
-import { AudienceGrowth } from "./components/audience-growth"
-import { TopPosts } from "./components/top-posts"
-import { RecentActivity } from "./components/recent-activity"
+import TrendingPosts from "@/components/TrendingPosts";
+import { useState, useEffect } from "react";
+import { Bell, Menu, Search, User, X } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnalyticsOverview } from "./components/analytics-overview";
+import { EngagementChart } from "./components/engagement-chart";
+import { AudienceGrowth } from "./components/audience-growth";
+import { TopPosts } from "./components/top-posts";
+import { RecentActivity } from "./components/recent-activity";
 
 export default function Dashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768)
-      if (window.innerWidth < 768) {
-        setIsSidebarOpen(false)
-      } else {
-        setIsSidebarOpen(true)
-      }
-    }
+      setIsMobile(window.innerWidth < 768);
+      setIsSidebarOpen(window.innerWidth >= 768);
+    };
 
-    checkScreenSize()
-    window.addEventListener("resize", checkScreenSize)
-    return () => window.removeEventListener("resize", checkScreenSize)
-  }, [])
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
@@ -44,7 +41,6 @@ export default function Dashboard() {
           <h1 className="text-lg font-semibold">Social Analytics</h1>
           <Button variant="ghost" size="icon" className="ml-auto md:hidden" onClick={() => setIsSidebarOpen(false)}>
             <X className="h-5 w-5" />
-            <span className="sr-only">Close sidebar</span>
           </Button>
         </div>
         <nav className="flex-1 overflow-auto py-4">
@@ -59,26 +55,6 @@ export default function Dashboard() {
                 <p className="text-xs text-gray-500 dark:text-gray-400">Social Media Manager</p>
               </div>
             </div>
-            <div className="space-y-1">
-              <Button variant="default" className="w-full justify-start">
-                Dashboard
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Analytics
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Content
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Audience
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Campaigns
-              </Button>
-              <Button variant="ghost" className="w-full justify-start">
-                Settings
-              </Button>
-            </div>
           </div>
         </nav>
       </aside>
@@ -89,7 +65,6 @@ export default function Dashboard() {
         <header className="flex h-14 items-center gap-4 border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-950">
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle sidebar</span>
           </Button>
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <form>
@@ -106,11 +81,9 @@ export default function Dashboard() {
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon">
               <Bell className="h-5 w-5" />
-              <span className="sr-only">Notifications</span>
             </Button>
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
-              <span className="sr-only">Account</span>
             </Button>
           </div>
         </header>
@@ -121,9 +94,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <h1 className="text-2xl font-bold">Dashboard Overview</h1>
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm">
-                  Export
-                </Button>
+                <Button variant="outline" size="sm">Export</Button>
                 <Button size="sm">Refresh Data</Button>
               </div>
             </div>
@@ -138,27 +109,27 @@ export default function Dashboard() {
 
               <TabsContent value="overview" className="space-y-4">
                 <AnalyticsOverview />
-
                 <div className="grid gap-4 md:grid-cols-2">
                   <EngagementChart />
                   <AudienceGrowth />
                 </div>
-
                 <div className="grid gap-4 md:grid-cols-3">
                   <TopPosts className="md:col-span-2" />
                   <RecentActivity />
                 </div>
+                {/* 📌 Added TrendingPosts */}
+                <TrendingPosts />
               </TabsContent>
 
               <TabsContent value="engagement">
                 <Card>
                   <CardHeader>
                     <CardTitle>Engagement Analytics</CardTitle>
-                    <CardDescription>Detailed metrics about user engagement with your content</CardDescription>
+                    <CardDescription>Detailed metrics about user engagement.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="h-[400px] flex items-center justify-center border rounded">
-                      <p className="text-muted-foreground">Engagement analytics content would go here</p>
+                      <p className="text-muted-foreground">Engagement analytics content would go here.</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -168,13 +139,11 @@ export default function Dashboard() {
                 <Card>
                   <CardHeader>
                     <CardTitle>Audience Analytics</CardTitle>
-                    <CardDescription>
-                      Detailed information about your audience demographics and behavior
-                    </CardDescription>
+                    <CardDescription>Details about your audience demographics.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="h-[400px] flex items-center justify-center border rounded">
-                      <p className="text-muted-foreground">Audience analytics content would go here</p>
+                      <p className="text-muted-foreground">Audience analytics content would go here.</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -184,11 +153,11 @@ export default function Dashboard() {
                 <Card>
                   <CardHeader>
                     <CardTitle>Content Analytics</CardTitle>
-                    <CardDescription>Performance metrics for your content across platforms</CardDescription>
+                    <CardDescription>Performance metrics for your content.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="h-[400px] flex items-center justify-center border rounded">
-                      <p className="text-muted-foreground">Content analytics would go here</p>
+                      <p className="text-muted-foreground">Content analytics would go here.</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -198,6 +167,6 @@ export default function Dashboard() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 

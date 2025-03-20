@@ -1,0 +1,12 @@
+{
+    "users": [
+      { "id": 1, "name": "Alice", "postCount": 25 },
+      { "id": 2, "name": "Bob", "postCount": 18 },
+      { "id": 3, "name": "Charlie", "postCount": 12 }
+    ],
+    "posts": [
+      { "id": 101, "userId": 1, "content": "Hello world!", "comments": 5 },
+      { "id": 102, "userId": 2, "content": "React is awesome!", "comments": 10 }
+    ]
+  }
+  
